@@ -1,2 +1,1 @@
-# DexRL
-DexRL: Scheduled Exploration for Reinforcement Learning Optimization in Dexterous Manipulation
+# DexPolicy: Scheduled Exploration for Policy Optimization in Dexterous Manipulation
