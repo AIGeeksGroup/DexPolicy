@@ -7,7 +7,7 @@ params:
   ent_coef: 0.001                                           # PPO Entropy coefficient
   vf_coef: 0.5                                              # Added multiplier on Value Function Loss
   clip_range: 0.2                                           # PPO Clip parameter
-  n_steps: 4096                                             # Number of timesteps to collect per iteration (e.g. global batch) 
+  n_steps: 4096                                             # Number of timesteps to collect per iteration (e.g. global batch)
   batch_size: 256                                           # Minibatch size for each ADAM step during PPO opt
   n_epochs: 5                                               # Number of epochs on collected global batch per iteration
   max_grad_norm: 0.5                                        # Original SB3 PPO default
