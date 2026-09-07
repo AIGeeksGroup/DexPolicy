@@ -1,0 +1,11 @@
+__pycache__/
+.pytest_cache/
+*.pyc
+.venv/
+.env
+outputs/
+logs/
+wandb/
+*.pt
+*.pth
+*.zip
