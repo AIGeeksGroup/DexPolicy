@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="DexPolicy: Scheduled Exploration for Policy Optimization in Dexterous Manipulation.">
+  <title>DexPolicy: Scheduled Exploration for Policy Optimization in Dexterous Manipulation</title>
+  <style>
+    :root {
+      --ink: #f3f1e9;
+      --muted: #a5aaa4;
+      --page: #101310;
+      --panel: #191d18;
+      --line: rgba(178, 211, 240, 0.2);
+      --accent: #69b7ff;
+      --max-width: 1480px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      background: var(--page);
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      color: var(--ink);
+      background: var(--page);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page-shell {
+      width: min(var(--max-width), 90vw);
+      margin: 0 auto;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid var(--line);
+      background: rgba(16, 19, 16, 0.92);
+      backdrop-filter: blur(16px);
+    }
+
+    .topbar-inner {
+      display: flex;
+      min-height: 68px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .wordmark {
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .title-accent { color: var(--accent); }
+
+    .topbar-label {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.67rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .hero {
+      padding: clamp(78px, 11vw, 160px) 0 clamp(68px, 9vw, 120px);
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 24px;
+      color: var(--accent);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 34px;
+      height: 3px;
+      content: "";
+      background: var(--accent);
+    }
+
+    h1 {
+      max-width: 1200px;
+      margin: 0;
+      font-size: clamp(2.4rem, 5.3vw, 6.8rem);
+      font-weight: 840;
+      letter-spacing: -0.065em;
+      line-height: 0.95;
+    }
+
+    main { border-top: 1px solid var(--line); }
+
+    .simulation-section {
+      padding: clamp(64px, 8vw, 118px) 0 126px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: clamp(2rem, 4vw, 4.8rem);
+      font-weight: 820;
+      letter-spacing: -0.06em;
+      line-height: 1;
+    }
+
+    .section-note {
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .simulation-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .video-card {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      transition: border-color 180ms ease, transform 180ms ease;
+    }
+
+    .video-card:hover {
+      border-color: rgba(105, 183, 255, 0.78);
+      transform: translateY(-3px);
+    }
+
+    .video-card video {
+      display: block;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #000;
+      object-fit: contain;
+    }
+
+    .video-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 48px;
+      gap: 12px;
+      padding: 12px 14px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .video-label::before {
+      width: 6px;
+      height: 6px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      content: "";
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(105, 183, 255, 0.72);
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 28px 0 40px;
+      color: var(--muted);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1120px) {
+      .simulation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 700px) {
+      .page-shell { width: 88vw; }
+      .topbar-inner,
+      .section-heading { align-items: flex-start; flex-direction: column; }
+      .topbar-inner { justify-content: center; padding: 17px 0; }
+      .section-note { white-space: normal; }
+      .simulation-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .video-card { transition: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner page-shell">
+      <span class="wordmark">DexPolicy</span>
+      <span class="topbar-label">Dexterous manipulation</span>
+    </div>
+  </header>
+
+  <section class="hero page-shell" aria-labelledby="page-title">
+    <p class="eyebrow">Policy optimization for dexterous control</p>
+    <h1 id="page-title"><span class="title-accent">DexPolicy:</span> Scheduled Exploration for Policy Optimization in Dexterous Manipulation</h1>
+  </section>
+
+  <main>
+    <section class="simulation-section page-shell" aria-labelledby="simulation-title">
+      <div class="section-heading">
+        <h2 id="simulation-title">MuJoCo Simulation</h2>
+        <span class="section-note">Eight evaluation rollouts</span>
+      </div>
+
+      <div class="simulation-grid">
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Evaluation rollout 01"><source src="simulation_h264_videos/eval_call_7500000.mp4" type="video/mp4"></video>
+          <span class="video-label">Rollout 01</span>
+        </article>
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Evaluation rollout 02"><source src="simulation_h264_videos/eval_call_7500000_2.mp4" type="video/mp4"></video>
+          <span class="video-label">Rollout 02</span>
+        </article>
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Evaluation rollout 03"><source src="simulation_h264_videos/eval_call_7500000_4.mp4" type="video/mp4"></video>
+          <span class="video-label">Rollout 03</span>
+        </article>
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Evaluation rollout 04"><source src="simulation_h264_videos/eval_call_7500000_5.mp4" type="video/mp4"></video>
+          <span class="video-label">Rollout 04</span>
+        </article>
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Evaluation rollout 05"><source src="simulation_h264_videos/eval_call_75000003.mp4" type="video/mp4"></video>
+          <span class="video-label">Rollout 05</span>
+        </article>
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Evaluation rollout 06"><source src="simulation_h264_videos/wechat_video_2026-08-27_204545_359.mp4" type="video/mp4"></video>
+          <span class="video-label">Rollout 06</span>
+        </article>
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Evaluation rollout 07"><source src="simulation_h264_videos/wechat_video_2026-08-27_204725_116.mp4" type="video/mp4"></video>
+          <span class="video-label">Rollout 07</span>
+        </article>
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Evaluation rollout 08"><source src="simulation_h264_videos/wechat_video_2026-08-27_204732_389.mp4" type="video/mp4"></video>
+          <span class="video-label">Rollout 08</span>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="page-shell">DexPolicy · MuJoCo Simulation</div>
+  </footer>
+</body>
+</html>
