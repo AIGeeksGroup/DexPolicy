@@ -145,6 +145,14 @@
       gap: 16px;
     }
 
+    .realworld-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .realworld-heading { margin-top: 96px; }
+
     .video-card {
       overflow: hidden;
       border: 1px solid var(--line);
@@ -211,6 +219,7 @@
       .topbar-inner { justify-content: center; padding: 17px 0; }
       .section-note { white-space: normal; }
       .simulation-grid { grid-template-columns: 1fr; }
+      .realworld-grid { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -273,11 +282,31 @@
           <span class="video-label">Rollout 08</span>
         </article>
       </div>
+
+      <div class="section-heading realworld-heading">
+        <h2 id="realworld-title">Real World Evaluation</h2>
+        <span class="section-note">Three real-world demonstrations</span>
+      </div>
+
+      <div class="realworld-grid" aria-labelledby="realworld-title">
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Real-world demonstration 01"><source src="realworld/Dex-01.mp4" type="video/mp4"></video>
+          <span class="video-label">Demonstration 01</span>
+        </article>
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Real-world demonstration 02"><source src="realworld/Dex-02.mp4" type="video/mp4"></video>
+          <span class="video-label">Demonstration 02</span>
+        </article>
+        <article class="video-card">
+          <video controls autoplay muted loop playsinline preload="metadata" aria-label="Real-world demonstration 03"><source src="realworld/Dex-03.mp4" type="video/mp4"></video>
+          <span class="video-label">Demonstration 03</span>
+        </article>
+      </div>
     </section>
   </main>
 
   <footer>
-    <div class="page-shell">DexPolicy · MuJoCo Simulation</div>
+    <div class="page-shell">DexPolicy · MuJoCo Simulation · Real World Evaluation</div>
   </footer>
 </body>
 </html>
