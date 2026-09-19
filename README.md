@@ -1,4 +1,4 @@
-# DexPolicy: Scheduled Exploration for Policy Optimization in Dexterous Manipulation
+# DexPolicy: Scheduled Exploration for Trajectory-Guided Dexterous Manipulation
 
 Method code for scheduled exploration with Gaussian PPO, trajectory-group GRPO,
 and a flow-generated Gaussian action mean.
