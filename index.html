@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="DexPolicy: Scheduled Exploration for Policy Optimization in Dexterous Manipulation.">
-  <title>DexPolicy: Scheduled Exploration for Policy Optimization in Dexterous Manipulation</title>
+  <meta name="description" content="DexPolicy: Scheduled Exploration for Trajectory-Guided Dexterous Manipulation.">
+  <title>DexPolicy: Scheduled Exploration for Trajectory-Guided Dexterous Manipulation</title>
   <style>
     :root {
       --ink: #f3f1e9;
@@ -74,6 +74,105 @@
       text-transform: uppercase;
     }
 
+    .resource-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      margin-top: 22px;
+    }
+
+    .resource-button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 8px 17px;
+      border: 1px solid rgba(105, 183, 255, 0.42);
+      border-radius: 999px;
+      color: var(--ink);
+      background: rgba(105, 183, 255, 0.07);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.68rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-decoration: none;
+      text-transform: uppercase;
+      transition: border-color 180ms ease, color 180ms ease, background 180ms ease, transform 180ms ease;
+    }
+
+    .resource-button:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: rgba(105, 183, 255, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .resource-links--top .resource-button {
+      min-height: 30px;
+      padding: 5px 10px;
+      font-size: 0.61rem;
+    }
+
+    .resource-links--top { margin-top: 0; gap: 7px; }
+
+    .hero-video {
+      display: block;
+      width: min(100%, 1040px);
+      height: auto;
+      max-height: 68vh;
+      margin: 32px 0 0;
+      border: 1px solid var(--line);
+      background: #000;
+      object-fit: contain;
+    }
+
+    .method-section {
+      padding: clamp(64px, 8vw, 118px) 0 clamp(64px, 8vw, 118px);
+    }
+
+    .method-section .section-heading { margin-bottom: 34px; }
+
+    .method-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, 0.75fr);
+      gap: clamp(28px, 5vw, 76px);
+      align-items: center;
+      padding: 34px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .method-row + .method-row { margin-top: 18px; }
+
+    .method-row--curves {
+      grid-template-columns: minmax(260px, 0.65fr) minmax(0, 1.35fr);
+    }
+
+    .method-figure {
+      margin: 0;
+      border: 1px solid var(--line);
+      background: #000;
+    }
+
+    .method-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .method-copy h3 {
+      margin: 0 0 14px;
+      color: var(--accent);
+      font-size: clamp(1.2rem, 2vw, 1.65rem);
+      letter-spacing: -0.025em;
+    }
+
+    .method-copy p {
+      margin: 0;
+      color: var(--muted);
+      font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+      line-height: 1.7;
+    }
+
     .hero {
       padding: clamp(78px, 11vw, 160px) 0 clamp(68px, 9vw, 120px);
     }
@@ -106,6 +205,20 @@
       letter-spacing: -0.065em;
       line-height: 0.95;
     }
+
+    .authors {
+      max-width: 1120px;
+      margin: 30px 0 0;
+      color: var(--ink);
+      text-align: left;
+      font-size: clamp(0.9rem, 1.35vw, 1.2rem);
+      line-height: 1.65;
+    }
+
+    .authors strong { font-weight: 780; }
+    .author-link { color: inherit; text-decoration: none; }
+    .authors sup { font-size: 0.62em; vertical-align: super; }
+    .author-notes { color: var(--muted); font-size: 0.78em; }
 
     main { border-top: 1px solid var(--line); }
 
@@ -210,6 +323,7 @@
 
     @media (max-width: 1120px) {
       .simulation-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .realworld-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     @media (max-width: 700px) {
@@ -220,6 +334,9 @@
       .section-note { white-space: normal; }
       .simulation-grid { grid-template-columns: 1fr; }
       .realworld-grid { grid-template-columns: 1fr; }
+      .method-row { grid-template-columns: 1fr; gap: 22px; }
+      .method-copy { order: 2; }
+      .method-figure { order: 1; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -232,16 +349,68 @@
   <header class="topbar">
     <div class="topbar-inner page-shell">
       <span class="wordmark">DexPolicy</span>
-      <span class="topbar-label">Dexterous manipulation</span>
+      <nav class="resource-links resource-links--top" aria-label="Project resources">
+        <a class="resource-button" href="https://arxiv.org/abs/2600.00000" target="_blank" rel="noreferrer">Paper</a>
+        <a class="resource-button" href="https://github.com/AIGeeksGroup/DexPolicy" target="_blank" rel="noreferrer">Code</a>
+        <a class="resource-button" href="https://huggingface.co/AIGeeksGroup/DexPolicy" target="_blank" rel="noreferrer">Model</a>
+      </nav>
     </div>
   </header>
 
   <section class="hero page-shell" aria-labelledby="page-title">
     <p class="eyebrow">Policy optimization for dexterous control</p>
-    <h1 id="page-title"><span class="title-accent">DexPolicy:</span> Scheduled Exploration for Policy Optimization in Dexterous Manipulation</h1>
+    <h1 id="page-title"><span class="title-accent">DexPolicy:</span> Scheduled Exploration for Trajectory-Guided Dexterous Manipulation</h1>
+    <div class="authors" aria-label="Authors and affiliations">
+      <div>
+        <strong><a class="author-link" href="https://github.com/whyyyyy123" target="_blank" rel="noreferrer">Haoyu Wang</a></strong><sup>1*</sup>&nbsp;&nbsp;
+        <strong><a class="author-link" href="https://scholar.google.com/citations?user=X2ekEX8AAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Siyuan Qian</a></strong><sup>1*</sup>&nbsp;&nbsp;
+        <strong><a class="author-link" href="https://github.com/yanjun711" target="_blank" rel="noreferrer">Yanjun Li</a></strong><sup>1*</sup>&nbsp;&nbsp;
+        <strong><a class="author-link" href="https://steve-zeyu-zhang.github.io/" target="_blank" rel="noreferrer">Zeyu Zhang</a></strong><sup>1*†</sup>&nbsp;&nbsp;
+        <strong><a class="author-link" href="https://scholar.google.com/citations?user=fWDoWsQAAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Yandong Guo</a></strong><sup>2</sup>&nbsp;&nbsp;
+        <strong><a class="author-link" href="https://scholar.google.com/citations?user=K1LjZxcAAAAJ&amp;hl=en" target="_blank" rel="noreferrer">Boxin Shi</a></strong><sup>1</sup>&nbsp;&nbsp;
+        <strong><a class="author-link" href="https://ha0tang.github.io/" target="_blank" rel="noreferrer">Hao Tang</a></strong><sup>1‡</sup>
+      </div>
+      <div><sup>1</sup>School of Computer Science, Peking University&nbsp;&nbsp;&nbsp; <sup>2</sup>AI<sup>2</sup> Robotics</div>
+      <div class="author-notes"><sup>*</sup>Equal contribution.&nbsp; <sup>†</sup>Project lead.&nbsp; <sup>‡</sup>Corresponding author.</div>
+      <nav class="resource-links" aria-label="Project resources">
+        <a class="resource-button" href="https://arxiv.org/abs/2600.00000" target="_blank" rel="noreferrer">Paper</a>
+        <a class="resource-button" href="https://github.com/AIGeeksGroup/DexPolicy" target="_blank" rel="noreferrer">Code</a>
+        <a class="resource-button" href="https://huggingface.co/AIGeeksGroup/DexPolicy" target="_blank" rel="noreferrer">Model</a>
+      </nav>
+      <video class="hero-video" controls autoplay muted loop playsinline preload="metadata" aria-label="DexPolicy demonstration video">
+        <source src="DexPolicy_video.mp4" type="video/mp4">
+      </video>
+    </div>
   </section>
 
   <main>
+    <section class="method-section page-shell" aria-labelledby="method-title">
+      <div class="section-heading">
+        <h2 id="method-title">Method</h2>
+        <span class="section-note">Scheduled exploration</span>
+      </div>
+
+      <div class="method-row">
+        <figure class="method-figure">
+          <img src="figs/method_overview.png" alt="DexPolicy method overview">
+        </figure>
+        <div class="method-copy">
+          <h3>DexPolicy Overview</h3>
+          <p>(A) Simulation and real-robot tasks. (B) Gaussian noise scheduled by training steps; the PPO example does not represent within-trial phases or other methods' schedules. (C) Paired updates and deterministic target success (%) from the baseline to DexPolicy. Simulation averages five shared objects over three seeds; hardware averages three objects with 20 trials from one model per condition. Policies are object-specific, with distinct simulation and hardware embodiments; GRPO uses continuation budgets.</p>
+        </div>
+      </div>
+
+      <div class="method-row method-row--curves">
+        <div class="method-copy">
+          <h3>Learning Curves</h3>
+          <p>Learning histories on the three hardware object geometries, using separate benchmark policies. PPO and FPO show stochastic evaluation returns; GRPO shows continuation rollout returns. Shading indicates sample standard deviation over three seeds; GRPO includes development seed 0. Dotted lines mark GRPO phase reloads; PPO checkpoints are nominal. Compare conditions within panels: return measurements and budgets differ across methods.</p>
+        </div>
+        <figure class="method-figure">
+          <img src="figs/method_learning_curves.png" alt="DexPolicy learning curves on three hardware object geometries">
+        </figure>
+      </div>
+    </section>
+
     <section class="simulation-section page-shell" aria-labelledby="simulation-title">
       <div class="section-heading">
         <h2 id="simulation-title">MuJoCo Simulation</h2>
