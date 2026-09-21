@@ -1,5 +1,15 @@
 # DexPolicy: Scheduled Exploration for Trajectory-Guided Dexterous Manipulation
 
+This repo is the official implementation of:
+
+> **DexPolicy: Scheduled Exploration for Trajectory-Guided Dexterous Manipulation**
+>
+> [Haoyu Wang](https://github.com/whyyyyy123)\*, [Siyuan Qian](https://scholar.google.com/citations?hl=en&user=X2ekEX8AAAAJ)\*, [Yanjun Li](https://github.com/yanjun711)\*, [Zeyu Zhang](https://steve-zeyu-zhang.github.io/)\*<sup>†</sup>, [Yandong Guo](https://scholar.google.com/citations?hl=en&user=fWDoWsQAAAAJ), [Boxin Shi](https://scholar.google.com/citations?hl=en&user=K1LjZxcAAAAJ), and [Hao Tang](https://ha0tang.github.io/)<sup>‡</sup>
+>
+> \*Equal contribution. <sup>†</sup>Project lead. <sup>‡</sup>Corresponding author.
+>
+> ### [Paper](PAPER_URL) | [Website](https://aigeeksgroup.github.io/DexPolicy/) | [Model](https://huggingface.co/AIGeeksGroup/DexPolicy)
+
 Method code for scheduled exploration with Gaussian PPO, trajectory-group GRPO,
 and a flow-generated Gaussian action mean.
 
