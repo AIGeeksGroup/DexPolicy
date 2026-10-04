@@ -8,7 +8,7 @@ This repo is the official implementation of:
 >
 > \*Equal contribution. <sup>†</sup>Project lead. <sup>‡</sup>Corresponding author.
 >
-> ### [Paper](PAPER_URL) | [Website](https://aigeeksgroup.github.io/DexPolicy/) | [Model](https://huggingface.co/AIGeeksGroup/DexPolicy)
+> ### [Paper](https://arxiv.org/abs/2610.00360) | [Website](https://aigeeksgroup.github.io/DexPolicy/) | [Model](https://huggingface.co/AIGeeksGroup/DexPolicy)
 
 Method code for scheduled exploration with Gaussian PPO, trajectory-group GRPO,
 and a flow-generated Gaussian action mean.
